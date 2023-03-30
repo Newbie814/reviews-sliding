@@ -7,19 +7,38 @@ const App = () => {
   const [index, setIndex] = useState(0);
   const { name, job, image, text } = people[index];
 
+  const checkNumber = (number) => {
+    if (number > people.length - 1) {
+      return 0;
+    }
+    if (number < 0) {
+      return people.length - 2;
+    }
+    return number;
+  };
+
   const nextPerson = () => {
     setIndex((index) => {
-      let newIndex = index + 1;
-      return checkNumber(newIndex);
+      const newValue = (index + 1) % people.length;
+      console.log(newValue);
+      return newValue;
     });
   };
   const prevPerson = () => {
     setIndex((index) => {
-      let newIndex = index - 1;
-      return checkNumber(newIndex);
+      const newValue = (index - 1 + people.length) % people.length;
+      return newValue;
     });
   };
-  const randomPerson = () => {};
+  const randomPerson = () => {
+    let randomNumber = Math.floor(Math.random() * people.length);
+    if (randomNumber === index) {
+      randomNumber = index + 1;
+    }
+    const newIndex = randomNumber % people.length;
+    // console.log(randomNumber, newIndex);
+    setIndex(newIndex);
+  };
   return (
     <main>
       <article className='review'>
